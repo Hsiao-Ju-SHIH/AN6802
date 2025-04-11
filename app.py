@@ -4,10 +4,13 @@ import datetime
 import google.generativeai as genai
 import os
 import wikipedia
+import requests
 
 api = os.getenv("makersuite")
 genai.configure(api_key=api)
 model = genai.GenerativeModel('gemini-1.5-flash')
+
+api_image = os.getenv('imagesearch')
 
 app = Flask(__name__)
 
@@ -67,6 +70,19 @@ def FAQinput():
     q = request.form.get("q")
     r = wikipedia.summary(q)
     return render_template('FAQinput.html', r=r)
+
+@app.route('/altInvest', methods=['POST', 'GET'])
+def altInvest():
+    # api = 'AIzaSyDar1zTonZY1Z-8k56SYkxKcED2YRt6eO0'
+    id = '32dd497be354f4627'
+    q = r'painting%20for%20sale'
+    num = 5
+    url = f'https://www.googleapis.com/customsearch/v1?key={api_image}&cx={id}&q={q}&searchType=image&num={num}'
+    res = requests.get(url=url)
+    res_json = res.json()
+    urls = [res_json['items'][i]['link'] for i in range(len(res_json['items']))]
+    r = urls[0]
+    return render_template('altInvest.html', r=r)
 
 @app.route('/userLog', methods=['POST', 'GET'])
 def userLog():

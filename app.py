@@ -73,7 +73,6 @@ def FAQinput():
 
 @app.route('/altInvest', methods=['POST', 'GET'])
 def altInvest():
-    # api = 'AIzaSyDar1zTonZY1Z-8k56SYkxKcED2YRt6eO0'
     id = '32dd497be354f4627'
     q = r'painting%20for%20sale'
     num = 5
